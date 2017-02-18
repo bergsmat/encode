@@ -1,8 +1,8 @@
 Package: encode
 Type: Package
-Title: Manipulate Ordered Lists and Pairs as a String
-Version: 0.1
-Date: 2017-01-06
+Title: Represent Ordered Lists and Pairs as a String
+Version: 0.2
+Date: 2017-02-18
 Author: Tim Bergsma
 Maintainer: Tim Bergsma <bergsmat@gmail.com>
 Description: Interconverts between ordered lists and compact string notation.  
@@ -15,4 +15,3 @@ LazyData: TRUE
 Imports:
 Suggests:
 RoxygenNote: 5.0.1
-VignetteBuilder: knitr

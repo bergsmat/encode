@@ -21,4 +21,3 @@ character
 \description{
 Encodes character.
 }
-

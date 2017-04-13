@@ -19,4 +19,3 @@ factor
 \description{
 Decodes an object using the default method. Typically \code{x} is a character vector containing codes that can be extracted from \code{encoding}. Corresponding decodes are returned as a factor.
 }
-

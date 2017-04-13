@@ -14,4 +14,6 @@ decode(x, ...)
 \description{
 Decodes an object.  Default method supplied.
 }
-
+\seealso{
+\code{\link{decode.default}}
+}

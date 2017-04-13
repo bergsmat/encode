@@ -2,7 +2,7 @@
 % Please edit documentation in R/encode.R
 \name{decodes}
 \alias{decodes}
-\title{Extract Deodes from an Object}
+\title{Extract Decodes from an Object}
 \usage{
 decodes(x, ...)
 }
@@ -14,4 +14,6 @@ decodes(x, ...)
 \description{
 Extracts decodes from an object. Default method is supplied.
 }
-
+\seealso{
+\code{\link{decodes.default}}
+}

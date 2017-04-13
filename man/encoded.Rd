@@ -15,6 +15,5 @@ encoded(x, ...)
 Checks if object is encoded.
 }
 \seealso{
-encoded.default
+\code{\link{encoded.default}}
 }
-

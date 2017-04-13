@@ -18,7 +18,7 @@
 #' 
 #' @param x object
 #' @param ... passed arguments
-#' @seealso encode.character encode.default encode.list codes decodes decode encoded
+#' @seealso \code{\link{encode.character}} \code{\link{encode.default}} \code{\link{encode.list}} \code{\link{codes}} \code{\link{decodes}} \code{\link{decode}} \code{\link{encoded}}
 #' @export
 #' @examples
 #' 
@@ -117,7 +117,7 @@ encode.default <- function(x,labels=NULL,...)encode(as.character(x),labels=label
 #' @param x object
 #' @param ... passed arguments
 #' @export
-#' @seealso encoded.default
+#' @seealso \code{\link{encoded.default}}
 encoded <- function(x, ...)UseMethod('encoded')
 
 #' Check If Default Object is Encoded
@@ -191,6 +191,7 @@ encoded.default <- function(x, ...)sapply(x,.encoded,USE.NAMES=FALSE)
 #' Extracts Codes from an object. Default method is supplied.
 #' @param x object
 #' @param ... passed arguments
+#' @seealso \code{\link{codes.default}}
 #' @export
 codes <- function(x,...)UseMethod('codes')
 
@@ -207,14 +208,15 @@ codes.default <- function(x, simplify = TRUE, ...){
   if(length(y) == 1 & simplify) y <- y[[1]]
   y
 }
-#' Extract Deodes from an Object
+#' Extract Decodes from an Object
 #' 
 #' Extracts decodes from an object. Default method is supplied.
 #' @param x object
 #' @param ... passed arguments
+#' @seealso \code{\link{decodes.default}}
 #' @export
 decodes <- function(x,...)UseMethod('decodes')
-#' Extract Deodes by Default from an Object
+#' Extract Decodes by Default from an Object
 #' 
 #' Extracts decodes from an object using the default method.
 #'
@@ -243,6 +245,7 @@ map <- function (x, from, to, strict = TRUE, ...)
 #' Decodes an object.  Default method supplied.
 #' @param x object
 #' @param ... passed arguments
+#' @seealso \code{\link{decode.default}}
 #' @export
 decode <- function(x,...)UseMethod('decode')
 
@@ -277,17 +280,3 @@ defaultSep <- function(x,...){
   if(!length(sep)) stop('x contains all the default candidates for sep')
   sep
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

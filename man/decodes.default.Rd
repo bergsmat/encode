@@ -2,7 +2,7 @@
 % Please edit documentation in R/encode.R
 \name{decodes.default}
 \alias{decodes.default}
-\title{Extract Deodes by Default from an Object}
+\title{Extract Decodes by Default from an Object}
 \usage{
 \method{decodes}{default}(x, simplify = TRUE, ...)
 }
@@ -19,4 +19,3 @@ list, or vector if simplify = TRUE
 \description{
 Extracts decodes from an object using the default method.
 }
-

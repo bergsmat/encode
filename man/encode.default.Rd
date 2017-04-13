@@ -19,4 +19,3 @@ character
 \description{
 Encodes using default method:  coerces to character and and encodes the result.
 }
-

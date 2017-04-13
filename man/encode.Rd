@@ -60,6 +60,5 @@ decodes(c)
 decode(1:4,'//1/a//2/b//3/c//')
 }
 \seealso{
-encode.character encode.default encode.list codes decodes decode encoded
+\code{\link{encode.character}} \code{\link{encode.default}} \code{\link{encode.list}} \code{\link{codes}} \code{\link{decodes}} \code{\link{decode}} \code{\link{encoded}}
 }
-

@@ -14,4 +14,6 @@ codes(x, ...)
 \description{
 Extracts Codes from an object. Default method is supplied.
 }
-
+\seealso{
+\code{\link{codes.default}}
+}

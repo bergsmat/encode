@@ -14,4 +14,3 @@
 \description{
 Checks if object is encoded, using default methodology. Always returns TRUE or FALSE, telling whether the corresponding element represents an encoding of levels and labels.
 }
-

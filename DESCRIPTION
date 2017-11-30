@@ -2,7 +2,6 @@ Package: encode
 Type: Package
 Title: Represent Ordered Lists and Pairs as Strings
 Version: 0.3.2
-Date: 2017-04-13
 Author: Tim Bergsma
 Maintainer: Tim Bergsma <bergsmat@gmail.com>
 Description: Interconverts between ordered lists and compact string notation.  

@@ -2,19 +2,25 @@
 #' 
 #' For compact storage, \code{encode} combines a set of levels and labels
 #' (codes and decodes) into a simple string.  The default method converts its
-#' argument to character.  The list method operates element-wise, expecting and
+#' argument to character.  The list method operates element-wise, expecting an
 #' equal number of label elements, each of which have the same length as the
 #' corresponding element of x.
 #' 
-#' An 'encoding' must be at least 5 characters long, beginning and ending with
-#' two instances of \code{sep}. Specified levels are likewise separated by
-#' double separators. If a label (decode) is available for a level, it follows
-#' the corresponding level: the two are separated by a single instance of
-#' \code{sep}.  Separators may be mixed within an encoded vector, but not
-#' within an element.  \code{--0-male--1-female--} indicates that the value 0
-#' represents the concept "male" and the value 1 represents "female".
+#' An empty 'encoding' consists of four identical characters, e.g. \code{////}.
 #' 
-#' If you don't supply the separator, \code{encode} uses the first of these that is not otherwise present in the result: /|:\\~!@#$%^&*?. (including dot).
+#' A non-empty encoding must be at least 5 characters long, beginning and 
+#' ending with two instances of \code{sep} e.g. \code{//1//}. Levels are 
+#' likewise separated from each other by double separators, e.g. \code{//1//2//}. 
+#' 
+#' If a label (decode) is available for a level, it follows the corresponding level: 
+#' the two are separated by a single instance of \code{sep}, e.g. \code{//1/a//2/b//}.
+#' 
+#' Encodings may be combined as elements of a character vector, i.e. and encoded vector.
+#' Choice of separator may vary among elements, but must be consistent within elements.
+#' 
+#' Labels (decodes) may be zero-length, but not levels (codes), e.g. \code{//1///} 
+#' is valid but \code{///a//} is not. A zero-length decode is extracted as NA.
+#' 
 #' 
 #' @param x object
 #' @param ... passed arguments
@@ -49,6 +55,13 @@
 #' decodes(b)
 #' decodes(c)
 #' decode(1:4,'//1/a//2/b//3/c//')
+#' \dontshow{
+#' stopifnot(encoded('////'))
+#' stopifnot(encoded('//a///'))
+#' stopifnot(!encoded('///a//')) 
+#' stopifnot(!encoded('//a/a//b/b///')) 
+#' stopifnot(identical(decode(1:4),factor(1:4)))
+#' }
 encode <- function(x,...)UseMethod('encode')
 
 #' Encode a List
@@ -66,14 +79,17 @@ is.defined <- function(x)!is.na(x)
 
 #' Encode Character.
 #' 
-#' Encodes character.
+#' Encodes character.  If \code{sep} is NULL, it is replaced with the first of these that is not otherwise present in the result: /|:\\~!@#$%^&*?. (including dot).
+
 #' @inheritParams encode
 #' @param labels same length as x if supplied
 #' @param sep a single character not present in x or labels
 #' @return character
 #' @export
-encode.character <- function(x,labels=NULL,sep=NULL,...){
+encode.character <- function(x, labels = NULL, sep = NULL, ...){
   if(!is.null(labels) & length(labels) != length(x))stop('lengths of x and labels must match')
+  if(any(is.na(x)))stop('elements of x cannot be NA')
+  if(any(x == '')) stop('elements of x cannot be empty strings')
   if(is.null(sep))sep <- defaultSep(c(x,labels))
   if(!is.null(labels))if(any(is.defined(labels)))x[is.defined(labels)] <- paste(x,labels,sep=sep)[is.defined(labels)]
   doublesep <- paste0(sep,sep)
@@ -90,13 +106,16 @@ encode.character <- function(x,labels=NULL,sep=NULL,...){
 #' @return character
 #' @export
 encode.default <- function(x,labels=NULL,...)encode(as.character(x),labels=labels,...)
+
 .encoded <- function(x,...){
+  if(length(x) == 0) return(FALSE)
   stopifnot(length(x) == 1)
+  if(grepl('EMPTYSTRING',x)) stop('EMPTYSTRING is reserved')
   x <- as.character(x)
   x <- sub('^\\s','',x)
   x <- sub('\\s$','',x)
   if(is.na(x))return(FALSE)
-  if (nchar(x) < 5 )return(FALSE)
+  if (nchar(x) < 4 )return(FALSE)
   first <- substr(x,1,1)
   second <- substr(x,2,2)
   end <- nchar(x)
@@ -107,6 +126,19 @@ encode.default <- function(x,labels=NULL,...)encode(as.character(x),labels=label
       ultimate != first ||
       penult != first
   )return(FALSE)
+  sep <- first
+  doublesep <- paste0(sep,sep)
+  triplesep <- paste0(sep,sep,sep)
+  triplesub <- paste0(sep,'EMPTYSTRING',doublesep)
+  y <- sub(doublesep,'',x, fixed = TRUE) # strip leader
+  if(y == doublesep) return(TRUE)
+  y <- gsub(triplesep,triplesub,y, fixed = TRUE) # trap empty label
+  y <- strsplit(y, doublesep, fixed = TRUE)[[1]] # vector of levels
+  y <- strsplit(y, sep, fixed = TRUE) # list of label / level
+  z <- sapply(y,length)
+  if(any(z > 2))return(FALSE)
+  y <- sapply(y,`[[`,1) # label only
+  if(any(y == '')) return(FALSE) # label must have length
   return(TRUE)
 }
 
@@ -122,57 +154,27 @@ encoded <- function(x, ...)UseMethod('encoded')
 
 #' Check If Default Object is Encoded
 #' 
-#' Checks if object is encoded, using default methodology. Always returns TRUE or FALSE, telling whether the corresponding element represents an encoding of levels and labels.
+#' Checks if object is encoded, using default methodology. Always returns logical, telling whether the corresponding element represents an encoding of levels and labels. Objects with zero length give \code{FALSE}.
 #' @inheritParams encoded
 #' @export
-encoded.default <- function(x, ...)sapply(x,.encoded,USE.NAMES=FALSE)
-{
-# extract <- function(x, pattern, group = 0, invert=FALSE,...){
-#   y <- regexec(pattern,x)
-#   scale <- sapply(y,length)
-#   group <- rep(group, length.out= length(y))
-#   group <- group + 1
-#   start <- sapply(seq_along(y), function(i){
-#     y <- y[[i]]
-#     group <- group[[i]]
-#     if(group > length(y)) return(0)
-#     y[[group]]
-#   })
-#   start[is.na(start)] <- 0
-#   start[start < 0] <- 0
-#   len <- sapply(seq_along(y), function(i){
-#     y <- y[[i]]
-#     group <- group[[i]]
-#     if(group > length(y)) return(0)
-#     attr(y,'match.length')[[group]]
-#   })
-#   len[is.na(len)] <- 0
-#   len[len < 0] <- 0
-#   stop <- start + len - 1
-#   stop[stop < 0] <- 0
-#   indices <- lapply(seq_along(y),function(i)start[[i]]:stop[[i]])
-#   indices[len == 0] <- 0
-#   splits <- strsplit(x,NULL)
-#   welds <- sapply(seq_along(splits), function(i){
-#     z <- splits[[i]]
-#     index <- indices[[i]]
-#     if(invert){
-#       if(len[i] > 0) z <- z[-index]
-#     } else z <- z[index]
-#     z <- paste(z,collapse='')
-#     z
-#    })
-#   welds[is.na(x)] <- NA
-#   welds
-# }
+#' @return logical
+encoded.default <- function(x, ...){
+  if(length(x) == 0) return(FALSE)
+  sapply(x,.encoded,USE.NAMES=FALSE)
 }
 .extract <- function(x,node,...){
   stopifnot(length(x) == 1)
+  if(grepl('EMPTYSTRING',x))stop('EMPTYSTRING is reserved')
   x <- as.character(x)
   if(!encoded(x)) return(as.character(NA))
   sep <- substr(x,1,1)
   doublesep <- paste0(sep,sep)
-  y <- strsplit(x,split=doublesep,fixed=TRUE)[[1]]
+  triplesep <- paste0(sep,sep,sep)
+  triplesub <- paste0(sep,'EMPTYSTRING',sep,sep)
+  y <- sub(doublesep,'',x, fixed = TRUE) # strip leader
+  #if(y == doublesep) return(TRUE)
+  y <- gsub(triplesep,triplesub,y,fixed = TRUE)
+  y <- strsplit(y,split=doublesep,fixed=TRUE)[[1]]
   y <- y[y!='']
   lift <- function(x,node){
     z <- strsplit(x,split=sep,fixed=TRUE)[[1]]
@@ -181,6 +183,7 @@ encoded.default <- function(x, ...)sapply(x,.encoded,USE.NAMES=FALSE)
   }
   y <- sapply(y,lift,node=node)
   y <- as.character(y)
+  y[y == 'EMPTYSTRING'] <- ''
   y
 } 
 .codes <- function(x,...).extract(x,node=1,...)
@@ -251,16 +254,16 @@ decode <- function(x,...)UseMethod('decode')
 
 #' Decode an Object by Default
 #' 
-#' Decodes an object using the default method. Typically \code{x} is a character vector containing codes that can be extracted from \code{encoding}. Corresponding decodes are returned as a factor. 
+#' Decodes an object using the default method. Typically \code{x} is a character vector containing codes that can be extracted from \code{encoding}. Corresponding decodes are returned as a factor. If \code{encoding} is NULL, it is replaced with an encoding such that levels and labels are both \code{unique(x)}.
 #' 
 #' @inheritParams decode
 #' @param encoding length one character that is itself encoded
 #' @return factor
 #' @export
-decode.default <- function(x,encoding='',...){
-  if(!encoded(encoding))encoding = encode(unique(x),unique(x),sep=defaultSep(unique(x)))
-  stopifnot(encoded(encoding))
+decode.default <- function(x,encoding = NULL, ...){
+  if(is.null(encoding)) encoding <- encode(unique(x),unique(x),sep=defaultSep(unique(x)))
   stopifnot(length(encoding) == 1)
+  stopifnot(encoded(encoding))
   codes <- codes(encoding)
   decodes <- decodes(encoding)
   y <- map(x,from=codes,to=decodes)

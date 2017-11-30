@@ -11,6 +11,9 @@
 
 \item{...}{passed arguments}
 }
+\value{
+logical
+}
 \description{
-Checks if object is encoded, using default methodology. Always returns TRUE or FALSE, telling whether the corresponding element represents an encoding of levels and labels.
+Checks if object is encoded, using default methodology. Always returns logical, telling whether the corresponding element represents an encoding of levels and labels. Objects with zero length give \code{FALSE}.
 }

@@ -4,7 +4,7 @@
 \alias{decode.default}
 \title{Decode an Object by Default}
 \usage{
-\method{decode}{default}(x, encoding = "", ...)
+\method{decode}{default}(x, encoding = NULL, ...)
 }
 \arguments{
 \item{x}{object}
@@ -17,5 +17,5 @@
 factor
 }
 \description{
-Decodes an object using the default method. Typically \code{x} is a character vector containing codes that can be extracted from \code{encoding}. Corresponding decodes are returned as a factor.
+Decodes an object using the default method. Typically \code{x} is a character vector containing codes that can be extracted from \code{encoding}. Corresponding decodes are returned as a factor. If \code{encoding} is NULL, it is replaced with an encoding such that levels and labels are both \code{unique(x)}.
 }

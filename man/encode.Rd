@@ -14,20 +14,25 @@ encode(x, ...)
 \description{
 For compact storage, \code{encode} combines a set of levels and labels
 (codes and decodes) into a simple string.  The default method converts its
-argument to character.  The list method operates element-wise, expecting and
+argument to character.  The list method operates element-wise, expecting an
 equal number of label elements, each of which have the same length as the
 corresponding element of x.
 }
 \details{
-An 'encoding' must be at least 5 characters long, beginning and ending with
-two instances of \code{sep}. Specified levels are likewise separated by
-double separators. If a label (decode) is available for a level, it follows
-the corresponding level: the two are separated by a single instance of
-\code{sep}.  Separators may be mixed within an encoded vector, but not
-within an element.  \code{--0-male--1-female--} indicates that the value 0
-represents the concept "male" and the value 1 represents "female".
+An empty 'encoding' consists of four identical characters, e.g. \code{////}.
 
-If you don't supply the separator, \code{encode} uses the first of these that is not otherwise present in the result: /|:\\~!@#$%^&*?. (including dot).
+A non-empty encoding must be at least 5 characters long, beginning and 
+ending with two instances of \code{sep} e.g. \code{//1//}. Levels are 
+likewise separated from each other by double separators, e.g. \code{//1//2//}.
+
+If a label (decode) is available for a level, it follows the corresponding level: 
+the two are separated by a single instance of \code{sep}, e.g. \code{//1/a//2/b//}.
+
+Encodings may be combined as elements of a character vector, i.e. and encoded vector.
+Choice of separator may vary among elements, but must be consistent within elements.
+
+Labels (decodes) may be zero-length, but not levels (codes), e.g. \code{//1///} 
+is valid but \code{///a//} is not.
 }
 \examples{
 
@@ -58,6 +63,13 @@ decodes(a)
 decodes(b)
 decodes(c)
 decode(1:4,'//1/a//2/b//3/c//')
+\dontshow{
+stopifnot(encoded('////'))
+stopifnot(encoded('//a///'))
+stopifnot(!encoded('///a//')) 
+stopifnot(!encoded('//a/a//b/b///')) 
+stopifnot(identical(decode(1:4),factor(1:4)))
+}
 }
 \seealso{
 \code{\link{encode.character}} \code{\link{encode.default}} \code{\link{encode.list}} \code{\link{codes}} \code{\link{decodes}} \code{\link{decode}} \code{\link{encoded}}

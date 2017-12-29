@@ -19,7 +19,7 @@
 #' Choice of separator may vary among elements, but must be consistent within elements.
 #' 
 #' Labels (decodes) may be zero-length, but not levels (codes), e.g. \code{//1///} 
-#' is valid but \code{///a//} is not. A zero-length decode is extracted as NA.
+#' is valid but \code{///a//} is not. A zero-length decode is extracted as an empty string.
 #' 
 #' 
 #' @param x object

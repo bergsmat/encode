@@ -21,6 +21,8 @@
 #' Labels (decodes) may be zero-length, but not levels (codes), e.g. \code{//1///} 
 #' is valid but \code{///a//} is not. A zero-length decode is extracted as an empty string.
 #' 
+#' Duplicate levels (codes) result in a warning for encode(), and are otherwise silently ignored.  Duplicate labels (decodes) result in case-collapsing.
+#' 
 #' 
 #' @param x object
 #' @param ... passed arguments
@@ -55,6 +57,10 @@
 #' decodes(b)
 #' decodes(c)
 #' decode(1:4,'//1/a//2/b//3/c//')
+#' decode(1:4,'//1/a//1/b//3/c//') # duplicate code: ignored
+#' decode(1:4,'//1/a//2/a//3/c//') # duplicate decode: collapsed
+#' # encode(c(1,1,2,3),c('a','b','c','d')) Warning: duplicate codes
+#' 
 #' \dontshow{
 #' stopifnot(encoded('////'))
 #' stopifnot(encoded('//a///'))
@@ -90,6 +96,10 @@ encode.character <- function(x, labels = NULL, sep = NULL, ...){
   if(!is.null(labels) & length(labels) != length(x))stop('lengths of x and labels must match')
   if(any(is.na(x)))stop('elements of x cannot be NA')
   if(any(x == '')) stop('elements of x cannot be empty strings')
+  dups <- x[duplicated(x)]
+  if(length(dups)){
+    warning('duplicate codes, e.g., ', dups[[1]])
+  }
   if(is.null(sep))sep <- defaultSep(c(x,labels))
   if(!is.null(labels))if(any(is.defined(labels)))x[is.defined(labels)] <- paste(x,labels,sep=sep)[is.defined(labels)]
   doublesep <- paste0(sep,sep)
@@ -254,7 +264,7 @@ decode <- function(x,...)UseMethod('decode')
 
 #' Decode an Object by Default
 #' 
-#' Decodes an object using the default method. Typically \code{x} is a character vector containing codes that can be extracted from \code{encoding}. Corresponding decodes are returned as a factor. If \code{encoding} is NULL, it is replaced with an encoding such that levels and labels are both \code{unique(x)}.
+#' Decodes an object using the default method. Typically \code{x} is a character vector containing codes that can be extracted from \code{encoding}. Corresponding decodes are returned as a factor with levels of unique decodes. If \code{encoding} is NULL, it is replaced with an encoding such that levels and labels are both \code{unique(x)}. Duplicate codes are ignored.  Duplicate decodes are collapsed (combined to a single level).
 #' 
 #' @inheritParams decode
 #' @param encoding length one character that is itself encoded
@@ -267,7 +277,7 @@ decode.default <- function(x,encoding = NULL, ...){
   codes <- codes(encoding)
   decodes <- decodes(encoding)
   y <- map(x,from=codes,to=decodes)
-  y <- factor(y,levels=decodes)
+  y <- factor(y,levels=unique(decodes))
   y
 }
 

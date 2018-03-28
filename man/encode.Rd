@@ -33,6 +33,8 @@ Choice of separator may vary among elements, but must be consistent within eleme
 
 Labels (decodes) may be zero-length, but not levels (codes), e.g. \code{//1///} 
 is valid but \code{///a//} is not. A zero-length decode is extracted as an empty string.
+
+Duplicate levels (codes) result in a warning for encode(), and are otherwise silently ignored.  Duplicate labels (decodes) result in case-collapsing.
 }
 \examples{
 
@@ -63,6 +65,10 @@ decodes(a)
 decodes(b)
 decodes(c)
 decode(1:4,'//1/a//2/b//3/c//')
+decode(1:4,'//1/a//1/b//3/c//') # duplicate code: ignored
+decode(1:4,'//1/a//2/a//3/c//') # duplicate decode: collapsed
+# encode(c(1,1,2,3),c('a','b','c','d')) Warning: duplicate codes
+
 \dontshow{
 stopifnot(encoded('////'))
 stopifnot(encoded('//a///'))

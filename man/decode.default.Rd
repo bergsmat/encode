@@ -17,5 +17,5 @@
 factor
 }
 \description{
-Decodes an object using the default method. Typically \code{x} is a character vector containing codes that can be extracted from \code{encoding}. Corresponding decodes are returned as a factor. If \code{encoding} is NULL, it is replaced with an encoding such that levels and labels are both \code{unique(x)}.
+Decodes an object using the default method. Typically \code{x} is a character vector containing codes that can be extracted from \code{encoding}. Corresponding decodes are returned as a factor with levels of unique decodes. If \code{encoding} is NULL, it is replaced with an encoding such that levels and labels are both \code{unique(x)}. Duplicate codes are ignored.  Duplicate decodes are collapsed (combined to a single level).
 }

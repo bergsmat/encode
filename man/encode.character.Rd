@@ -21,3 +21,7 @@ character
 \description{
 Encodes character.  If \code{sep} is NULL, it is replaced with the first of these that is not otherwise present in the result: /|:\\~!@#$%^&*?. (including dot).
 }
+\seealso{
+Other encode: \code{\link{encode.default}},
+  \code{\link{encode.list}}, \code{\link{encode}}
+}

@@ -1,7 +1,7 @@
 Package: encode
 Type: Package
 Title: Represent Ordered Lists and Pairs as Strings
-Version: 0.3.5
+Version: 0.3.6
 Author: Tim Bergsma
 Maintainer: Tim Bergsma <bergsmat@gmail.com>
 Description: Interconverts between ordered lists and compact string notation.  
@@ -9,6 +9,7 @@ Description: Interconverts between ordered lists and compact string notation.
  Analogous to factor levels and labels. Generics encode() and decode()
  perform interconversion, while codes() and decodes() extract components of an encoding.
  The function encoded() checks whether something is interpretable as an encoding.
+ If a vector has an encoded 'guide' attribute, as_factor() uses it to coerce to factor.
 License: GPL-3
 LazyData: TRUE
 Imports:

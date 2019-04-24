@@ -79,4 +79,7 @@ stopifnot(identical(decode(1:4),factor(1:4)))
 }
 \seealso{
 \code{\link{encode.character}} \code{\link{encode.default}} \code{\link{encode.list}} \code{\link{codes}} \code{\link{decodes}} \code{\link{decode}} \code{\link{encoded}}
+
+Other encode: \code{\link{encode.character}},
+  \code{\link{encode.default}}, \code{\link{encode.list}}
 }

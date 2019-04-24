@@ -19,3 +19,6 @@ list, or vector if simplify = TRUE
 \description{
 Extracts codes from an object using the default method.
 }
+\seealso{
+Other codes: \code{\link{codes}}
+}

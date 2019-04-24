@@ -19,3 +19,7 @@ list
 \description{
 Encodes a list.
 }
+\seealso{
+Other encode: \code{\link{encode.character}},
+  \code{\link{encode.default}}, \code{\link{encode}}
+}

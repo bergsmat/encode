@@ -17,3 +17,7 @@ same class as x
 \description{
 Decodes a data.frame. Calls as_factor() for each column with an encoded guide attribute.
 }
+\seealso{
+Other decode: \code{\link{as_factor}},
+  \code{\link{decode.default}}, \code{\link{decode}}
+}

@@ -16,4 +16,6 @@ Extracts Codes from an object. Default method is supplied.
 }
 \seealso{
 \code{\link{codes.default}}
+
+Other codes: \code{\link{codes.default}}
 }

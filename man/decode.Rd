@@ -16,4 +16,8 @@ Decodes an object.  Default method supplied.
 }
 \seealso{
 \code{\link{decode.default}}
+
+Other decode: \code{\link{as_factor}},
+  \code{\link{decode.data.frame}},
+  \code{\link{decode.default}}
 }

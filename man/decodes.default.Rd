@@ -20,5 +20,7 @@ list, or vector if simplify = TRUE
 Extracts decodes from an object using the default method.
 }
 \seealso{
-Other decodes: \code{\link{decodes}}
+Other decodes: 
+\code{\link{decodes}()}
 }
+\concept{decodes}

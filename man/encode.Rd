@@ -23,7 +23,7 @@ An empty 'encoding' consists of four identical characters, e.g. \code{////}.
 
 A non-empty encoding must be at least 5 characters long, beginning and 
 ending with two instances of \code{sep} e.g. \code{//1//}. Levels are 
-likewise separated from each other by double separators, e.g. \code{//1//2//}.
+likewise separated from each other by double separators, e.g. \code{//1//2//}. 
 
 If a label (decode) is available for a level, it follows the corresponding level: 
 the two are separated by a single instance of \code{sep}, e.g. \code{//1/a//2/b//}.
@@ -80,6 +80,9 @@ stopifnot(identical(decode(1:4),factor(1:4)))
 \seealso{
 \code{\link{encode.character}} \code{\link{encode.default}} \code{\link{encode.list}} \code{\link{codes}} \code{\link{decodes}} \code{\link{decode}} \code{\link{encoded}}
 
-Other encode: \code{\link{encode.character}},
-  \code{\link{encode.default}}, \code{\link{encode.list}}
+Other encode: 
+\code{\link{encode.character}()},
+\code{\link{encode.default}()},
+\code{\link{encode.list}()}
 }
+\concept{encode}

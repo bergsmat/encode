@@ -1,8 +1,11 @@
 Package: encode
 Type: Package
 Title: Represent Ordered Lists and Pairs as Strings
-Version: 0.3.6
-Author: Tim Bergsma
+Version: 0.3.7
+Authors@R: person(given = "Tim",
+                  family = "Bergsma",
+                  role = c("aut", "cre"),
+                  email = "bergsmat@gmail.com")
 Maintainer: Tim Bergsma <bergsmat@gmail.com>
 Description: Interconverts between ordered lists and compact string notation.  
  Useful for capturing code lists, and pair-wise codes and decodes, for text storage.
@@ -11,7 +14,6 @@ Description: Interconverts between ordered lists and compact string notation.
  The function encoded() checks whether something is interpretable as an encoding.
  If a vector has an encoded 'guide' attribute, as_factor() uses it to coerce to factor.
 License: GPL-3
-LazyData: TRUE
 Imports:
 Suggests: magrittr
-RoxygenNote: 6.0.1
+RoxygenNote: 7.3.3

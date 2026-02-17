@@ -17,5 +17,7 @@ Checks if object is encoded.
 \seealso{
 \code{\link{encoded.default}}
 
-Other encoded: \code{\link{encoded.default}}
+Other encoded: 
+\code{\link{encoded.default}()}
 }
+\concept{encoded}

@@ -33,6 +33,9 @@ as_factor(structure(factor(foo), guide = '//1/bar//5/bar//'))
 
 }
 \seealso{
-Other decode: \code{\link{decode.data.frame}},
-  \code{\link{decode.default}}, \code{\link{decode}}
+Other decode: 
+\code{\link{decode}()},
+\code{\link{decode.data.frame}()},
+\code{\link{decode.default}()}
 }
+\concept{decode}

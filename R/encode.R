@@ -87,7 +87,7 @@ is.defined <- function(x)!is.na(x)
 
 #' Encode Character.
 #' 
-#' Encodes character.  If \code{sep} is NULL, it is replaced with the first of these that is not otherwise present in the result: /|:\\~!@#$%^&*?. (including dot).
+#' Encodes character.  If \code{sep} is NULL, it is replaced with the first of these that is not otherwise present in the result: /|:~!@#$%^&*?. (including dot).
 
 #' @inheritParams encode
 #' @param labels same length as x if supplied

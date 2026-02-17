@@ -20,6 +20,9 @@ character
 Encodes using default method:  coerces to character and and encodes the result.
 }
 \seealso{
-Other encode: \code{\link{encode.character}},
-  \code{\link{encode.list}}, \code{\link{encode}}
+Other encode: 
+\code{\link{encode}()},
+\code{\link{encode.character}()},
+\code{\link{encode.list}()}
 }
+\concept{encode}

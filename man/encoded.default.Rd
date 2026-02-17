@@ -18,5 +18,7 @@ logical
 Checks if object is encoded, using default methodology. Always returns logical, telling whether the corresponding element represents an encoding of levels and labels. Objects with zero length give \code{FALSE}.
 }
 \seealso{
-Other encoded: \code{\link{encoded}}
+Other encoded: 
+\code{\link{encoded}()}
 }
+\concept{encoded}

@@ -17,5 +17,7 @@ Extracts decodes from an object. Default method is supplied.
 \seealso{
 \code{\link{decodes.default}}
 
-Other decodes: \code{\link{decodes.default}}
+Other decodes: 
+\code{\link{decodes.default}()}
 }
+\concept{decodes}
